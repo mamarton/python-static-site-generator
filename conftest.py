@@ -26,7 +26,7 @@ class Parser:
         if filename == "ssg":
             file_path = Path.cwd() / "ssg.py"
         else:
-            file_path = Path.cwd() / "ssg" / "{}.py".format(filename)
+            file_path = Path.cwd() / "ssg" / f"{filename}.py"
 
         grammar = parso.load_grammar()
         module = grammar.parse(path=file_path.resolve())
@@ -38,9 +38,7 @@ class Parser:
         else:
             error_message = grammar.iter_errors(module)[0].message
             error_start_pos = grammar.iter_errors(module)[0].start_pos[0]
-            self.message = "{} on or around line {} in `{}`.".format(
-                error_message, error_start_pos, file_path.name
-            )
+            self.message = f"{error_message} on or around line {error_start_pos} in `{file_path.name}`."
 
     def get_by_name(self, type, name, code=None):
         if code is None:
@@ -57,7 +55,8 @@ class Parser:
     def get_args(self, code):
         return list(
             code.find_all("call_argument").map(
-                lambda node: str(node.target) + ":" + str(node.value).replace("'", '"')
+                lambda node: f"{str(node.target)}:"
+                + str(node.value).replace("'", '"')
             )
         )
 

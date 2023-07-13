@@ -390,11 +390,11 @@ def test_parser_resource_class_module2(parse):
         ext_list_exists
     ), "Have you created a variable called `extensions` and assigned it a list of extensions?"
 
-    ext_values = list(
-        ext_list.find_all("string").map(lambda node: re.sub("\"|'", "", node.value))
+    ext_values = sorted(
+        ext_list.find_all("string").map(
+            lambda node: re.sub("\"|'", "", node.value)
+        )
     )
-    ext_values.sort()
-
     ext_values_exist = ext_values == [".css", ".gif", ".html", ".jpg", ".png"]
     assert (
         ext_values_exist

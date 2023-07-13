@@ -61,11 +61,11 @@ def test_parser_markdown_class_module4(parse):
         ext_list_exists
     ), "Have you created a variable called `extensions` and assigned it a list of extensions?"
 
-    ext_values = list(
-        ext_list.find_all("string").map(lambda node: re.sub("\"|'", "", node.value))
+    ext_values = sorted(
+        ext_list.find_all("string").map(
+            lambda node: re.sub("\"|'", "", node.value)
+        )
     )
-    ext_values.sort()
-
     ext_values_exist = ext_values == [".markdown", ".md"]
     assert (
         ext_values_exist
@@ -232,11 +232,11 @@ def test_parser_restructuredtext_class_module4(parse):
         ext_list_exists
     ), "Have you created a variable called `extensions` and assigned it a list of extensions?"
 
-    ext_values = list(
-        ext_list.find_all("string").map(lambda node: re.sub("\"|'", "", node.value))
+    ext_values = sorted(
+        ext_list.find_all("string").map(
+            lambda node: re.sub("\"|'", "", node.value)
+        )
     )
-    ext_values.sort()
-
     ext_values_exist = ext_values == [".rst"]
     assert (
         ext_values_exist
